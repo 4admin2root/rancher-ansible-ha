@@ -1,0 +1,15 @@
+---
+- name: reload mysql-rancher
+  sudo: yes
+  command: systemctl daemon-reload
+  tags:
+    - rancher-server
+
+- name: restart mysql-rancher
+  sudo: yes
+  service:
+    name: mysql-rancher
+    state: restarted
+  tags:
+    - rancher-server
+

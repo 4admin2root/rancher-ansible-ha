@@ -1,0 +1,9 @@
+rancher_db_port: 3306
+rancher_db_host: 172.16.222.1
+rancher_db_name: cattle
+rancher_db_user: rancher
+rancher_db_pass: password
+
+rancher_server_image: rancher/server
+rancher_server_image_tag: v1.2.0-pre3
+rancher_ha_url: rancher.example.com

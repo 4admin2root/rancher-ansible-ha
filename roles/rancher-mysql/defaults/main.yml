@@ -1,0 +1,11 @@
+---
+rancher_db_port: 3306
+rancher_db_host: host-01
+rancher_db_name: cattle
+rancher_db_user: rancher
+rancher_db_pass: very_secure_rancher_db_pass
+mysql_root_password: very_secure_root_pass
+rancher_db_datadir: /var/lib/rancher
+
+rancher_db_image: mysql
+rancher_db_image_tag: 5.6.34

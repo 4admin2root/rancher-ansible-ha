@@ -1,0 +1,4 @@
+---
+rancher_server_image: rancher/server
+rancher_server_image_tag: v1.1.4
+rancher_ha_executable: /usr/local/bin/rancher-ha.sh

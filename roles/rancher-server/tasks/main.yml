@@ -1,0 +1,18 @@
+---
+- name: configure rancher server ha
+  sudo: yes
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0755
+  with_items:
+    - src: rancher-ha.sh
+      dest: "{{ rancher_ha_executable }}"
+  tags:
+    - rancher-server
+
+- name: execute rancher server ha
+  sudo: yes
+  command: "/bin/bash -c '{{ rancher_ha_executable }} {{ rancher_server_image }}:{{ rancher_server_image_tag }}'"
+  tags:
+    - rancher-server

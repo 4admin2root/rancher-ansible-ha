@@ -1,0 +1,16 @@
+---
+# optional if you provide outside mysql
+- hosts: server-01
+  become: yes
+  roles:
+    - rancher-mysql
+
+- hosts: server-01
+  become: yes
+  roles:
+    - rancher-bootstrap
+
+- hosts: role=server
+  become: yes
+  roles:
+    - rancher-server

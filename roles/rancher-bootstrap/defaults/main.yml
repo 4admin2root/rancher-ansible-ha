@@ -1,0 +1,6 @@
+---
+rancher_bs_name: rancher-bootstrap
+rancher_ha_container: rancher-ha-creator
+bootstrap_executable_path: /usr/local/bin/rancher-bootstrap.sh
+rancher_ha_location: /tmp/rancher-ha.sh
+rancher_ha_check: /etc/default/rancher-ha-bootstrapped

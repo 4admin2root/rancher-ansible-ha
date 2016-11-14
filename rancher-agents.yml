@@ -1,0 +1,10 @@
+---
+- hosts: role=agent
+  gather_facts: no
+  vars:
+    ca_fingerprint: 4C:27:43:17:17:56:5A:3A:07:F3:E6:D0:03:2C:42:58:94:9C:F9:EC
+    api_address: https://rancher.example.com/v1/scripts/A2A283C6ED49A5B16358:1479078000000:cMXVtTSJhVZlBSlQltv4fgFVRA
+  tasks:
+    - name: start agents
+      become: yes
+      command: /bin/bash -c 'docker run -e CATTLE_HOST_LABELS="role=worker"  -d --privileged -e CA_FINGERPRINT="{{ ca_fingerprint }}" -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.0.2 {{ api_address }}'

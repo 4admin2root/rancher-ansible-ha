@@ -1,0 +1,5 @@
+[role=server]
+control-01 private_ipv4=172.16.222.1 ansible_ssh_host=xx.xx.xx.xx
+
+[role=agent]
+worker-001 private_ipv4=172.16.222.4 ansible_ssh_host=xx.xx.xx.xx

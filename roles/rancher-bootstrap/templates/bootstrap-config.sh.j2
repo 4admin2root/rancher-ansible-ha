@@ -1,0 +1,47 @@
+#!/bin/bash -e
+
+if [ $(cat {{ rancher_ha_check }}) == 'true' ]
+then
+  exit
+else
+  docker run -d -p 8080:8080 \
+  --name={{ rancher_bs_name }} \
+  -e CATTLE_DB_CATTLE_MYSQL_HOST={{ rancher_db_host }} \
+  -e CATTLE_DB_CATTLE_MYSQL_PORT={{ rancher_db_port }} \
+  -e CATTLE_DB_CATTLE_MYSQL_NAME={{ rancher_db_name }} \
+  -e CATTLE_DB_CATTLE_USERNAME={{ rancher_db_user }} \
+  -e CATTLE_DB_CATTLE_PASSWORD={{ rancher_db_pass }} \
+  {{ rancher_server_image }}:{{ rancher_server_image_tag }}
+
+  until $(curl --output /dev/null --silent --head --fail http://localhost:8080); do
+    printf '.'
+    sleep 5
+  done
+
+  bs_ct=$(docker create \
+  --name={{ rancher_ha_container }} \
+  --link {{ rancher_bs_name }} \
+  -e URL=http://{{ rancher_bs_name }}:8080/admin/ha \
+  -e NODES=3 \
+  -e FQDN_URL={{ rancher_ha_url }} \
+  lusu777/rancher-ha-auto)
+
+  docker start $bs_ct
+
+  sleep 10
+  {% raw %}
+  until [ $(docker inspect -f {{.State.Running}} $bs_ct) == "false" ]; do
+    printf '.'
+    sleep 5
+  done
+  {% endraw %}
+
+  docker cp $bs_ct:/tmp/rancher-ha.sh {{ rancher_ha_location }}
+
+  docker stop {{ rancher_bs_name }}
+  docker rm {{ rancher_bs_name }}
+  docker rm {{ rancher_ha_container }}
+
+  echo 'true' > {{ rancher_ha_check }}
+
+fi

@@ -1,0 +1,28 @@
+---
+- name: write bootstrap executable
+  sudo: yes
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0755
+  with_items:
+    - src: bootstrap-config.sh.j2
+      dest: "{{ bootstrap_executable_path }}"
+  tags:
+    - rancher-server
+
+- name: execute bootstrap script
+  sudo: yes
+  command: "/bin/bash -c '{{ bootstrap_executable_path }}'"
+  tags:
+    - rancher-server
+
+- name: copy rancher-ha.sh to local
+  sudo: yes
+  fetch:
+    fail_on_missing: yes
+    src: "{{ rancher_ha_location }}"
+    dest: roles/rancher-server/files/rancher-ha.sh
+    flat: yes
+  tags:
+    - rancher-server
