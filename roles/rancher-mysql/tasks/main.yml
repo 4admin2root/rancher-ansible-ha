@@ -14,3 +14,6 @@
     - restart mysql-rancher
   tags:
     - rancher-server
+- name: test callback
+  sudo: yes
+  shell: which lynx

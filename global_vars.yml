@@ -5,5 +5,15 @@ rancher_db_user: rancher
 rancher_db_pass: password
 
 rancher_server_image: rancher/server
-rancher_server_image_tag: v1.2.0-pre3
-rancher_ha_url: rancher.example.com
+rancher_server_image_tag: v1.6.9-rc4
+rancher_ha_url: rancher.xzxpay.com
+
+
+mysql_root_password: very_secure_root_pass
+rancher_db_datadir: /var/lib/rancher
+
+rancher_db_image: mysql
+rancher_db_image_tag: 5.7
+
+#todo:
+#mysql version and volume for data
